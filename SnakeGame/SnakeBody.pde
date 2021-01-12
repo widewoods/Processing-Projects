@@ -1,22 +1,33 @@
 public class SnakeBody{
-  int x, y;
-  int tempx, tempy;
+  float x, y;
+  float prev_x, prev_y;
+  
+  int timer;
   
   SnakeBody other;
   
-  public SnakeBody(SnakeBody other, int startX, int startY){
+  public SnakeBody(SnakeBody other, float startX, float startY){
+    timer = SnakeGame.timer;
+    
     this.x = startX;
     this.y = startY;
     this.other = other;
   }
   
-  void followSnake(){
-    if(other != null){
-    tempx = x;
-    tempy = y;
+  void follow(){
+    timer++;
     
-    this.x = other.tempx;
-    this.y = other.tempy;
+    if(timer >= SnakeGame.moveTimer){    
+      
+      prev_x = x;
+      prev_y = y;
+      
+      if(other != null){   
+        this.x = other.prev_x;
+        this.y = other.prev_y;
+      }
+      
+      timer = 0;
     }
   }
   
@@ -25,6 +36,6 @@ public class SnakeBody{
     
     noStroke();
     fill(0, g, 0);
-    rect(x * SnakeGame.gridSize + 1, y * SnakeGame.gridSize + 1, SnakeGame.gridSize -1, SnakeGame.gridSize -1);
+    rect(floor(x) * SnakeGame.gridSize + 1, floor(y) * SnakeGame.gridSize + 1, SnakeGame.gridSize -1, SnakeGame.gridSize -1);
   }
 }
