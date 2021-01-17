@@ -22,9 +22,9 @@ void setup() {
   noSmooth();
   stroke(255);
   noCursor();
-  
+
   minim = new Minim(this);
-  mySound = minim.loadFile("Sabaton - Long Live The King (Lyrics English & Deutsch).mp3");
+  mySound = minim.loadFile("LastGoodbye.mp3");
   mySound.play();
 }
 
@@ -38,12 +38,20 @@ void draw() {
   rightSound = mySound.right.get(i) + 0.1f;
   float volume = mySound.right.level() + 0.1f;
   len = lerp(len, 350 * volume, 0.06f);
-  rightAngle = lerp(rightAngle, 3 *rightSound, 0.01f);
-  leftAngle = lerp(leftAngle, 3 * leftSound, 0.01f);
+  rightAngle = lerp(rightAngle, 4 * rightSound, 0.01f);
+  leftAngle = lerp(leftAngle, 4 * leftSound, 0.01f);
   branch(len);
-  
+
+  if ((leftSound + rightSound)/2 > 0.4f) {
+    c += 10;
+    //c;
+  } else {
+    c = c / 1.03f;
+  }
+  c = constrain(c, 0, 255);
+
   i += 1;
-  if(i == mySound.bufferSize()- 1){
+  if (i == mySound.bufferSize()- 1) {
     i = 0;
   }
 }
@@ -52,7 +60,11 @@ void branch(float len) {
   line(0, 0, 0, -len);
   //c += 1f;
   //c = c % 255;
-  stroke(c, 170, 255);
+  if (c == 0) {
+    stroke(255);
+  } else {
+    stroke(c, 170, c + 200);
+  }
   if (len > 5) {
     pushMatrix();
     translate(0, -len);
@@ -68,23 +80,22 @@ void branch(float len) {
   }
 }
 
-void keyPressed(){
+void keyPressed() {
   //Skip forward/backward by 1sec.
-  if(key == CODED){
-    if(keyCode == LEFT){
+  if (key == CODED) {
+    if (keyCode == LEFT) {
       mySound.skip(-1000);
     }
-    if(keyCode == RIGHT){
+    if (keyCode == RIGHT) {
       mySound.skip(1000);
     }
   }
-  
+
   //Pause/Unpause
-  if(key == ' '){
-    if(mySound.isPlaying()){
+  if (key == ' ') {
+    if (mySound.isPlaying()) {
       mySound.pause();
-    }
-    else{
+    } else {
       mySound.loop();
     }
   }
