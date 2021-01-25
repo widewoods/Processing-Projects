@@ -53,10 +53,10 @@ void draw() {
 
   for (int x = 0; x < columnCount; x++) {
     for (int y = 0; y < rowCount; y++) {
-      if (cells[x][y] == ALIVE) {
-        fill(255);
-      } else {
-        fill(50);
+      if(cells[x][y] == ALIVE){
+         fill(255);
+      } else{
+        fill(0);
       }
 
       rect(x * cellSize, y * cellSize, cellSize, cellSize);
@@ -66,6 +66,8 @@ void draw() {
   if (paused && mousePressed) {
     int x = (int)map(mouseX, 0, width, 0, columnCount);
     int y = (int)map(mouseY, 0, height, 0, rowCount);
+    x = constrain(x, 0, columnCount - 1);
+    y= constrain(y, 0, rowCount - 1);
 
     if (nextGenCells[x][y] == ALIVE) {
       cells[x][y] = DEAD;
