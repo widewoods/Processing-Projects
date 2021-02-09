@@ -1,8 +1,10 @@
 class Circle {
   private boolean isFixed;
+  private boolean isOutside;
 
   private float rollSpeed;
   private float radius;
+  private int multiplier;
 
   private float dist;
   private float angleFormedWithParent;
@@ -11,11 +13,16 @@ class Circle {
 
   private Circle parent;
 
-  public Circle(float r, float s, boolean isFixed, Circle parent) {
+  public Circle(float r, float s, boolean isFixed, boolean isOutside, Circle parent) {
     radius = r;
     rollSpeed = s;
     this.isFixed = isFixed;
     this.parent = parent;
+    if(isOutside){
+      multiplier = 1;
+    } else{
+      multiplier = -1;
+    }
 
     if (isFixed) {
       center = new PVector(0, 0);
@@ -30,7 +37,7 @@ class Circle {
       float t = angleFormedWithParent;
       float a = dist / radius;
 
-      center = new PVector(parent.center.x + (parent.radius + radius) * cos(t), parent.center.y + (parent.radius + radius) * sin(t));
+      center = new PVector(parent.center.x + (parent.radius + multiplier * radius) * cos(t), parent.center.y + (parent.radius + multiplier * radius) * sin(t));
 
       drawPoint = new PVector(center.x - radius * cos(a + t), center.y - radius * sin(a + t));
     }
@@ -43,12 +50,7 @@ class Circle {
     ellipse(0, 0, 2 * radius, 2 * radius);
     popMatrix();
     if (!isFixed) {
-      pushStyle();
-      strokeWeight(2);
-      stroke(255, 0, 0);
-      point(drawPoint.x, drawPoint.y);
-      popStyle();
-      stroke(255);
+      line(center.x, center.y, drawPoint.x, drawPoint.y);
     }
   }
 }
