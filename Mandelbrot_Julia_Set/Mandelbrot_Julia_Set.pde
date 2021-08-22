@@ -64,25 +64,3 @@ void drawSet(float cx, float cy) {
     }
   }
 }
-
-void keyPressed() {
-  if (key == 'w') {
-    zoom = zoom/2;
-  }
-  if (key == 's') {
-    zoom = zoom * 2;
-  }
-  //if (key == ' ') {
-  //  paused = !paused;
-  //}
-  if (key == ESC) {
-    key = 0;
-    drawSet(0, 0);
-  }
-  redraw();
-}
-
-void mousePressed() {
-  drawSet(map(mouseX, 0, width, -zoom, zoom), map(mouseY, 0, height, -zoom, zoom));
-  redraw();
-}
