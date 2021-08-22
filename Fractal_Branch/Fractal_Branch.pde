@@ -24,8 +24,6 @@ void draw() {
   angleOffset = map(cos(a/10), -1, 1, -PI, PI);
   branch(len);
 
-  //c = map(mouseX, 0, width, 0, 255);
-
   a += 0.01f;
 }
 
