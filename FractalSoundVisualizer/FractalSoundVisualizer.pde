@@ -125,7 +125,7 @@ void keyPressed() {
     }
   }
 
-  //Pause/Unpause
+  //Pause / Unpause
   if (key == ' ') {
     if (mySound.isPlaying()) {
       mySound.pause();
